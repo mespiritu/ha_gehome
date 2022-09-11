@@ -31,7 +31,8 @@ from ..entities import (
     GeDispenser, 
     GeErdPropertySensor,
     GeErdPropertyBinarySensor,
-    ConvertableDrawerModeOptionsConverter
+    ConvertableDrawerModeOptionsConverter,
+    IceMakerFridgeControlConverter
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -79,7 +80,7 @@ class FridgeApi(ApplianceApi):
                 GeFridge(self),
             ])
             if(ice_maker_control and ice_maker_control.status_fridge != ErdOnOff.NA):
-                fridge_entities.append(GeErdPropertyBinarySensor(self, ErdCode.ICE_MAKER_CONTROL, "status_fridge"))
+                fridge_entities.append(GeErdSwitch(self,ErdCode.ICE_MAKER_CONTROL, IceMakerFridgeControlConverter()))
             if(water_filter and water_filter != ErdFilterStatus.NA):
                 fridge_entities.append(GeErdSensor(self, ErdCode.WATER_FILTER_STATUS))
             if(air_filter and air_filter != ErdFilterStatus.NA):
